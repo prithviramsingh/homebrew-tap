@@ -3,7 +3,7 @@ cask "macoptimizer" do
       sha256 "7276e18ab6ae5e90d37ab95b766b4b48ba2793a55a266f409e21123b9257ccef"
   
       url "https://github.com/prithviramsingh/MacOptimizer/releases/download/v#{version}/MacOptimizer-#{version}.dmg"
-      name "Mac Optimizer"
+      name "MacOptimizer"
       desc "Lightweight native macOS performance optimizer"
       homepage "https://github.com/prithviramsingh/MacOptimizer"
   

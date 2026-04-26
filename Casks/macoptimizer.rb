@@ -7,7 +7,7 @@ cask "macoptimizer" do
       desc "Lightweight native macOS performance optimizer"
       homepage "https://github.com/prithviramsingh/MacOptimizer"
   
-     app "Mac Optimizer.app"
+     app "MacOptimizer.app"
   
      zap trash: [
        "~/Library/Caches/com.prithvibondili.macoptimizer",

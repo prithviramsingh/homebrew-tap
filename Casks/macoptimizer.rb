@@ -1,6 +1,6 @@
 cask "macoptimizer" do
-      version "1.1.7"
-      sha256 "a5a5027f235a1860bc9b7072104ecc1fbd4a8e5c501b1821067867555118a0c7"
+      version "1.1.8"
+      sha256 "8beb95fa2a054b256309eaf5c871dea30b005e32b7a5306bc943d4534dcf4b28"
   
       url "https://github.com/prithviramsingh/MacOptimizer/releases/download/v#{version}/MacOptimizer-#{version}.dmg"
       name "MacOptimizer"

@@ -1,0 +1,42 @@
+name: Update Cask
+
+on:
+  repository_dispatch:
+    types: [update_cask]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get latest release
+        id: release
+        run: |
+          RELEASE=$(curl -s https://api.github.com/repos/prithviramsingh/MacOptimizer/releases/latest)
+          VERSION=$(echo "$RELEASE" | jq -r '.tag_name' | sed 's/^v//')
+          DMG_URL=$(echo "$RELEASE" | jq -r '.assets[] | select(.name | endswith(".dmg")) | .browser_download_url')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "DMG_URL=$DMG_URL" >> $GITHUB_ENV
+
+      - name: Compute SHA256
+        run: |
+          SHA256=$(curl -sL "$DMG_URL" | shasum -a 256 | awk '{print $1}')
+          echo "SHA256=$SHA256" >> $GITHUB_ENV
+
+      - name: Update cask
+        run: |
+          sed -i "s/version \".*\"/version \"$VERSION\"/" Casks/macoptimizer.rb
+          sed -i "s/sha256 \".*\"/sha256 \"$SHA256\"/" Casks/macoptimizer.rb
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Casks/macoptimizer.rb
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "chore: bump macoptimizer to $VERSION"
+          git push
